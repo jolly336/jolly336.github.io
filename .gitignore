@@ -1,0 +1,8 @@
+/node_modules
+/public/
+.MWebMetaData
+.deploy_git
+debug.log
+package-lock.json
+db.json
+/source/_posts/.*.md
