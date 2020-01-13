@@ -75,5 +75,5 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:haoxunwang/haoxunwang.github.io.git
+  repo: git@github.com:jolly336/jolly336.github.io.git
   branch: master
