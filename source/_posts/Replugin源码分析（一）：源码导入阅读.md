@@ -15,7 +15,7 @@ tags: [Android, 插件化]
 
 [Replugin](https://github.com/Qihoo360/RePlugin) 源码 clone 下来，目录结构如下：
 
-![Replugin 源码工程](replugin_source_dir.jpg)
+<img desc="Replugin 源码目录结构" src="replugin_source_dir.jpg" width="30%"/>
 
 RePlugin 框架本身是基于 Android Studio 开发的，主要包括两种类型的库：
 
@@ -36,9 +36,9 @@ RePlugin 框架本身是基于 Android Studio 开发的，主要包括两种类�
 
 Replugin 源码工程中 host & plugin 的 gradle 插件是个 Android library，library 项目是个 Android Application，不能一次性导入到一个工程看查看源码，所以我们需要新建个 AS 空项目，把上面介绍的工程通过 `import module`的方式导入进来，导入进来就可以方便插件它的源码了。
 
-如图，replugin_source_reading 是我创建的一个空项目，导入点击 toolbar  -> File -> New -> Import Module 把 replugin-host-gradle、replugin-host-library、replugin-plugin-gradle、replugin-plugin-library 四个 module 导入进来，到这里就把 Replugin 源码环境搭建起来了。
- 
-![源码库导入 AS](replugin_source_reading.jpg)
+如图，replugin_source_reading 是我创建的一个空项目，依次点击 toolbar  -> File -> New -> Import Module 把 replugin-host-gradle、replugin-host-library、replugin-plugin-gradle、replugin-plugin-library 四个 module 导入进来，到这里就把 Replugin 源码环境搭建起来了。
+
+<img desc="源码库导入 AS" src="replugin_source_reading.jpg" width="60%"/>
 
 * sample demo 导入
 
@@ -46,9 +46,10 @@ Replugin 源码工程中 host & plugin 的 gradle 插件是个 Android library�
     2. replugin-sample-extra：包括 fresco host & plugin 演示工程，展示宿主和插件公共一份代码的能力，和 replugin-sample 一样导入就行
     
 如图，导入实例工程和其它 Android App 一样，选择你要导入的 demo 工程导入即可。
-![Replugin host demo](replugin_host_demo.jpg)
 
-![Replugin plugin demo](replugin_plugin_demo.jpg)
+<img desc="Replugin host demo" src="replugin_host_demo.jpg" width="50%" height="50%"/>
+<img desc="Replugin plugin demo" src="replugin_plugin_demo.jpg" width="50%" height="50%" />
+
 
 ## 参考
 
