@@ -2,7 +2,7 @@
 title: 性能优化之Matrix
 date: 2019-10-14 11:14:01
 tags: Android
-categories: [Android,性能优化]
+categories: [Android, 性能优化]
 ---
 
 本文讲解微信团队开源的 Android 性能优化检测工具-[Matrix](https://github.com/Tencent/matrix) 中 TracePlugin 原理，分析检测慢函数、卡顿的过程 。
