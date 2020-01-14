@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本博客来自Android studio断点调试高级技巧总结一文。  本文将总结几种在开发中比较重要的断点调试方法：条件断点、异常断点、和日志断点。">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android studio断点调试高级技巧总结">
+<meta property="og:url" content="http://nelson.duoshuo.com/2017/03/06/Android-studio断点调试高级技巧总结/index.html">
+<meta property="og:site_name" content="Nelson&#39;s page">
+<meta property="og:description" content="本博客来自Android studio断点调试高级技巧总结一文。  本文将总结几种在开发中比较重要的断点调试方法：条件断点、异常断点、和日志断点。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_1.jpg">
+<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_2.jpg">
+<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_3.jpg">
+<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_4.jpg">
+<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_5.jpg">
+<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_6.jpg">
+<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_7.jpg">
+<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_8.jpg">
+<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_9.jpg">
+<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_9.jpg">
+<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_10.jpg">
+<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_11.jpg">
+<meta property="og:updated_time" content="2020-01-14T14:29:07.858Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android studio断点调试高级技巧总结">
+<meta name="twitter:description" content="本博客来自Android studio断点调试高级技巧总结一文。  本文将总结几种在开发中比较重要的断点调试方法：条件断点、异常断点、和日志断点。">
+<meta name="twitter:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nelson.duoshuo.com/2017/03/06/Android-studio断点调试高级技巧总结/">
+
+
+
+
+
+  <title>Android studio断点调试高级技巧总结 | Nelson's page</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Nelson's page</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nelson.duoshuo.com/2017/03/06/Android-studio断点调试高级技巧总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nelson">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nelson's page">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android studio断点调试高级技巧总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-06T10:47:59+08:00">
+                2017-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本博客来自<a href="http://www.jianshu.com/p/984e101fd73e" target="_blank" rel="noopener">Android studio断点调试高级技巧总结</a>一文。</p>
+</blockquote>
+<p>本文将总结几种在开发中比较重要的断点调试方法：<strong>条件断点</strong>、<strong>异常断点</strong>、<strong>和日志断点</strong>。</p>
+<a id="more"></a>
+<h2 id="条件断点"><a href="#条件断点" class="headerlink" title="条件断点"></a>条件断点</h2><p>假设我们有一个循环体，但是我们只想调试i==10的情况，此时可以采用条件断点来完成。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">    j++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果我们想观察i==500时，程序的执行情况，可以这样操作。首先在j++所在行设置一个断点</p>
+<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_1.jpg" alt="条件断点_1"><br>此时 在断点上单击右键，输入i==500</p>
+<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_2.jpg" alt="条件断点_2"></p>
+<p>设置完毕啦，启动断点调试后，你就会发现，第一次进入端点时，i==500了。</p>
+<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_3.jpg" alt="条件断点_3"></p>
+<h2 id="异常断点"><a href="#异常断点" class="headerlink" title="异常断点"></a>异常断点</h2><p>这个功能个人感觉还是挺有用处的。先说适用场景，假设我们的App出现崩溃，但是因为一些原因log日志不好查看或者查看不到，我们知道可能是NullPointerException异常了，但是定位不到异常在哪里，此时我们可能会将自己怀疑可能出现空指针异常的地方都打上断点，这样做是非常低效的，有了异常断点功能，一步就可以搞定。<br>为了说明问题，我在37行人为的引入了空指针异常。</p>
+<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_4.jpg" alt="异常断点_1"></p>
+<p>打开Run-&gt;View BreakPoints或者直接ctrl+shift+F8,打开异常设置面板。</p>
+<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_5.jpg" alt="异常断点_2"></p>
+<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_6.jpg" alt="异常断点_3"></p>
+<p>按上图操作成功的加入了空指针异常断点监控，此时直接Debug模式调试。</p>
+<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_7.jpg" alt="异常断点_4"></p>
+<p>程序直接在37行停下了，而且会打印出空指针的日志。注意37行我们并没有提前设置断点。是不是很神奇，直接定位到了bug。</p>
+<h2 id="日志断点"><a href="#日志断点" class="headerlink" title="日志断点"></a>日志断点</h2><p>如果我们想要在断点调试的时候添加log日志，我们最常用的方式是直接加入一行log，重新编译，观察结果后，在去掉log，在重新编译，此时我们可以使用日志断点的功能。</p>
+<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_8.jpg" alt="日志断点_1"></p>
+<p>设置方法，首先设置普通断点，在断点上单击右键，将suspand属性设为false，在出现的对话框中勾选上Log evaluated expression，下面我们在第一个断点上想观察一下i的值，在第二个断点上打印下当前线程的名字。设置如下</p>
+<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_9.jpg" alt="日志断点_2"></p>
+<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_9.jpg" alt="日志断点_3"></p>
+<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_10.jpg" alt="日志断点_4"></p>
+<p>运行一把，看看效果：</p>
+<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_11.jpg" alt="日志断点_5"></p>
+<p>android的断点调试功能就介绍到这里。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/28/Android-native和js简单交互/" rel="next" title="Android native和js简单交互">
+                <i class="fa fa-chevron-left"></i> Android native和js简单交互
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/02/如何打败拖延症/" rel="prev" title="如何打败拖延症">
+                如何打败拖延症 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="Nelson">
+            
+              <p class="site-author-name" itemprop="name">Nelson</p>
+              <p class="site-description motion-element" itemprop="description">热爱技术，热爱生活。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#条件断点"><span class="nav-number">1.</span> <span class="nav-text">条件断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常断点"><span class="nav-number">2.</span> <span class="nav-text">异常断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志断点"><span class="nav-number">3.</span> <span class="nav-text">日志断点</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nelson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Github,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Github是为开发者提供Git仓库的托管服务，是一个让开发者与朋友、同事、同学及陌生人共享代码的完美场所。除了Git仓库的托管服务外，还为开发者和团队提供了一系列功能，帮助其提高效率、高品质地进行代码编写。本文将讲解一些关于Github PR(pull request)的使用和技巧。">
+<meta name="keywords" content="Github">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Github Tips之pull request(PR)">
+<meta property="og:url" content="http://nelson.duoshuo.com/2018/08/04/Github-Tips之pull-request-PR/index.html">
+<meta property="og:site_name" content="Nelson&#39;s page">
+<meta property="og:description" content="Github是为开发者提供Git仓库的托管服务，是一个让开发者与朋友、同事、同学及陌生人共享代码的完美场所。除了Git仓库的托管服务外，还为开发者和团队提供了一系列功能，帮助其提高效率、高品质地进行代码编写。本文将讲解一些关于Github PR(pull request)的使用和技巧。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wanghaoxun.com/github_logo.png">
+<meta property="og:image" content="http://wanghaoxun.com/github_pr_home.jpg">
+<meta property="og:image" content="http://wanghaoxun.com/github_pr_detail.png">
+<meta property="og:image" content="http://wanghaoxun.com/pr%E6%A6%82%E5%BF%B5%E5%9B%BE.jpg">
+<meta property="og:image" content="http://wanghaoxun.com/WIP%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="http://wanghaoxun.com/UpdateToNew.jpg">
+<meta property="og:image" content="http://wanghaoxun.com/PR%E6%8E%A5%E5%8F%97.jpg">
+<meta property="og:image" content="http://wanghaoxun.com/PR_checkout.jpg">
+<meta property="og:updated_time" content="2020-01-14T14:29:07.861Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Github Tips之pull request(PR)">
+<meta name="twitter:description" content="Github是为开发者提供Git仓库的托管服务，是一个让开发者与朋友、同事、同学及陌生人共享代码的完美场所。除了Git仓库的托管服务外，还为开发者和团队提供了一系列功能，帮助其提高效率、高品质地进行代码编写。本文将讲解一些关于Github PR(pull request)的使用和技巧。">
+<meta name="twitter:image" content="http://wanghaoxun.com/github_logo.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nelson.duoshuo.com/2018/08/04/Github-Tips之pull-request-PR/">
+
+
+
+
+
+  <title>Github Tips之pull request(PR) | Nelson's page</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Nelson's page</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nelson.duoshuo.com/2018/08/04/Github-Tips之pull-request-PR/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nelson">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nelson's page">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Github Tips之pull request(PR)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-04T12:16:25+08:00">
+                2018-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Github/" itemprop="url" rel="index">
+                    <span itemprop="name">Github</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Github是为开发者提供Git仓库的托管服务，是一个让开发者与朋友、同事、同学及陌生人共享代码的完美场所。除了Git仓库的托管服务外，还为开发者和团队提供了一系列功能，帮助其提高效率、高品质地进行代码编写。本文将讲解一些关于Github PR(pull request)的使用和技巧。</p>
+</blockquote>
+<p><img src="http://wanghaoxun.com/github_logo.png" width="60%" height="30%"></p>
+<a id="more"></a>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Pull Request 是用户修改代码后向对方仓库发送采纳请求的功能，也是GitHub的核心功能正因为有了这个功能，才会让众多开发者轻松地加入到开源开发的队伍中来。</p>
+<p>在 Pull Request页面能够列表查看当前处于Open状态的 Pull Request。通过点击页面左部和上部的选项可以进行筛选和重新排列。<br>在列表中点击特定的 Pull Request 就会进入详细页面。页 面上方显示着这次是从谁的哪个分支向谁的哪个分支发送了 Pull Request。下面，我们以<a href="https://github.com/haoxunwang/GlideTest" target="_blank" rel="noopener">GlideTest</a>仓库为例进行讲解。注：下面haoxunwang是<a href="https://github.com/haoxunwang/GlideTest" target="_blank" rel="noopener">GlideTest</a>仓库的原作者，MogaoCaves是提交PR的开发者，MogaoCaves的<a href="https://github.com/MogaoCaves/GlideTest" target="_blank" rel="noopener">GlideTest</a>仓库是fork来自原作者haoxunwang的仓库。</p>
+<p>图1【PR首页，显示了<a href="https://github.com/haoxunwang/GlideTest" target="_blank" rel="noopener">GlideTest</a>仓库的pr所有的信息】<br><img src="http://wanghaoxun.com/github_pr_home.jpg" alt="github_pr_home"></p>
+<p>图2【PR详情，可以看到提交者从哪个分支提交到仓库的哪个分支】<br><img src="http://wanghaoxun.com/github_pr_detail.png" alt="github_pr_detail"></p>
+<h2 id="发送PR流程"><a href="#发送PR流程" class="headerlink" title="发送PR流程"></a>发送PR流程</h2><p><img src="http://wanghaoxun.com/pr%E6%A6%82%E5%BF%B5%E5%9B%BE.jpg" alt="PR概念图"></p>
+<h3 id="拉取代码"><a href="#拉取代码" class="headerlink" title="拉取代码"></a>拉取代码</h3><ul>
+<li>首先fork目标仓库（以<a href="https://github.com/haoxunwang/GlideTest" target="_blank" rel="noopener">GlideTest</a>为例）</li>
+<li>git clone <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:MogaoCaves/GlideTest.git</li>
+<li>git checkout -b work master创建特性分支并自动切换</li>
+<li>添加代码</li>
+<li>git diff 查看修改是否正确</li>
+<li>git push origin work 创建远程分支</li>
+<li>git branch -a 查看分支，origin/work已经被创建</li>
+</ul>
+<h3 id="发送PR"><a href="#发送PR" class="headerlink" title="发送PR"></a>发送PR</h3><ul>
+<li>登录GitHub并切换到work分支，点击分支名左侧的绿色按钮，查看修改是否正确</li>
+<li>确认无误之后，点击create pull request </li>
+<li>send pull request</li>
+<li>该仓库的管理者会接到通知</li>
+<li>代码修改合理，我们此次提交Pull Request会被仓库拥有者采纳</li>
+</ul>
+<h3 id="想让PR更加有效的方法？"><a href="#想让PR更加有效的方法？" class="headerlink" title="想让PR更加有效的方法？"></a>想让PR更加有效的方法？</h3><ul>
+<li>不必等代码最终开发完成，在PR中附带一段简单代码让大家有个大体印象，能获取不少反馈</li>
+<li>使用Tasklist语法，反映出哪些功能已经实现，将来要做哪些工作，能加快审查者的工作效率，还能作为自己的备忘录使用</li>
+<li>不要在PR中添加无关的修改，处理与主题无关的作业请另外创建分支，不然会让原本清晰的讨论变得一团糟</li>
+<li>明确标出“正在开发过程中”，在标题前加上“[WIP]”字样，WIP是work in progress的简写，等所有功能完成之后，再消去这个前缀<br><img src="http://wanghaoxun.com/WIP%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="WIP示意图"></li>
+</ul>
+<h3 id="仓库的维护"><a href="#仓库的维护" class="headerlink" title="仓库的维护"></a>仓库的维护</h3><blockquote>
+<p>Fork或clone来的仓库，一旦放置不管就会离最新的源代码越来越远。如果不以最新的源代码为基础开发，劳神费力地编写代码也很可能是白费力气。所以需要我们学习如何让仓库保持最新状态。</p>
+</blockquote>
+<p><img src="http://wanghaoxun.com/UpdateToNew.jpg" alt="将仓库更新至最新状态"></p>
+<ul>
+<li>git clone <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:MogaoCaves/GlideTest.git 克隆fork来的仓库</li>
+<li>git remote add upstream <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:haoxunwang/GlideTest.git 给原仓库设置upstream名称，将其作为远程仓库。今后，这个仓库以upstream作为原仓库的标识符，只需要设定一次</li>
+<li>git fetch upstream 获取最新数据，让仓库维持最新状态</li>
+<li>git merge upstream/master 将upstream/master分支与当前分支(master)合并，</li>
+</ul>
+<h2 id="接受PR流程"><a href="#接受PR流程" class="headerlink" title="接受PR流程"></a>接受PR流程</h2><blockquote>
+<p>采纳PR前的准备：代码审查</p>
+</blockquote>
+<p><img src="http://wanghaoxun.com/PR%E6%8E%A5%E5%8F%97.jpg" alt="PR接受"></p>
+<ul>
+<li>在本地开发环境中反映PR的内容，例如，PR接受方的用户名为haoxunwang，发送方的用户名为“PR 发送者”</li>
+<li>git clone <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:haoxunwang/GlideTest.git 克隆接受方仓库到本地</li>
+<li>git remote add mogao(PR发送者) <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:(PR发送者)MogaoCaves/GlideTest.git </li>
+<li>git fetch PR发送者 获取发送方的远程仓库 git fetch mogao</li>
+<li><p>git checkout -b pr1 创建用于检查的分支 git checkout -b work<br><img src="http://wanghaoxun.com/PR_checkout.jpg" alt="PR_checkout"></p>
+</li>
+<li><p>git merge PR发送者/work 合并发送方分支代码 git merge mogao/work</p>
+</li>
+<li>git branch -D PR1 检查无误之后，删除分支 git branch -D work</li>
+<li>git checkout master 切换至我们master分支</li>
+<li>git merge PR发送者/work 合并PR发送者/work分支的内容 git merge mogao/work</li>
+<li>git push 推送至远端</li>
+</ul>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q &amp; A"></a>Q &amp; A</h2><ul>
+<li>为何要在特性分支（例如，本文的work分支）中进行作业再提交PR？<br>  当前Git的主流开发模式都会使用特性分支。特性分支顾名思义，是集中实现单一特性（主题），除此之外不进行任何作业的分支。在日常开发中，往往会创建数个特性分支，同时在此之外再保留一个随时可以发布软件的稳定分支。稳定分支的角色通常由master分支担当。所以请养成创建特性分支后再修改代码的好习惯吧。在Github上发送Pull Request时，一般都是发送特性分支。这样一来，PR就拥有了更明确的特性（主题）。为了让对方了解自己修改代码的意图，有助于提高代码审查的效率。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Github/" rel="tag"># Github</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/03/Java代理技术/" rel="next" title="Java代理技术">
+                <i class="fa fa-chevron-left"></i> Java代理技术
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/04/Github-Tips之快捷键/" rel="prev" title="Github Tips之快捷键">
+                Github Tips之快捷键 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="Nelson">
+            
+              <p class="site-author-name" itemprop="name">Nelson</p>
+              <p class="site-description motion-element" itemprop="description">热爱技术，热爱生活。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发送PR流程"><span class="nav-number">2.</span> <span class="nav-text">发送PR流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拉取代码"><span class="nav-number">2.1.</span> <span class="nav-text">拉取代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送PR"><span class="nav-number">2.2.</span> <span class="nav-text">发送PR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想让PR更加有效的方法？"><span class="nav-number">2.3.</span> <span class="nav-text">想让PR更加有效的方法？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#仓库的维护"><span class="nav-number">2.4.</span> <span class="nav-text">仓库的维护</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接受PR流程"><span class="nav-number">3.</span> <span class="nav-text">接受PR流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q-amp-A"><span class="nav-number">4.</span> <span class="nav-text">Q &amp; A</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nelson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

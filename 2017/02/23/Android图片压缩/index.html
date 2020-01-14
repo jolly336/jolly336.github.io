@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文讲解了Android Compress image的方式，主要从图片的存在形式、检测图片大小的方法、压缩方式、数据对比等方面阐述了压缩方案。">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android图片压缩">
+<meta property="og:url" content="http://nelson.duoshuo.com/2017/02/23/Android图片压缩/index.html">
+<meta property="og:site_name" content="Nelson&#39;s page">
+<meta property="og:description" content="本文讲解了Android Compress image的方式，主要从图片的存在形式、检测图片大小的方法、压缩方式、数据对比等方面阐述了压缩方案。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-14T14:29:07.860Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android图片压缩">
+<meta name="twitter:description" content="本文讲解了Android Compress image的方式，主要从图片的存在形式、检测图片大小的方法、压缩方式、数据对比等方面阐述了压缩方案。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nelson.duoshuo.com/2017/02/23/Android图片压缩/">
+
+
+
+
+
+  <title>Android图片压缩 | Nelson's page</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Nelson's page</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nelson.duoshuo.com/2017/02/23/Android图片压缩/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nelson">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nelson's page">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android图片压缩</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-23T21:49:15+08:00">
+                2017-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文讲解了Android Compress image的方式，主要从<strong>图片的存在形式</strong>、<strong>检测图片大小的方法</strong>、<strong>压缩方式</strong>、<strong>数据对比</strong>等方面阐述了压缩方案。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="图片的存在形式"><a href="#图片的存在形式" class="headerlink" title="图片的存在形式"></a>图片的存在形式</h2><ol>
+<li><strong>文件形式</strong>（即以二进制形式存在于硬盘上）</li>
+<li><strong>流的形式</strong> （即以二进制形式存在于内存中）</li>
+<li><strong>Bitmap形式</strong></li>
+</ol>
+<blockquote>
+<p> <strong>区别：</strong>文件形式和流的形式对图片体积大小没有影响，也就是说，如果图片在手机SD卡上的大小是100KB，那么通过流的形式读到内存中，也是占用100KB的大小，注意是流的形式，不是bitmap的形式；当图片以Bitmap的形式存在时，其占用的内存会瞬间变大，曾经试过把500KB左右的图片加载到内存中，以Bitmap形式存在时，内存占用近10MB，当然这个增大的倍数不是固定的。</p>
+</blockquote>
+<h2 id="检测图片大小的方法"><a href="#检测图片大小的方法" class="headerlink" title="检测图片大小的方法"></a>检测图片大小的方法</h2><ol>
+<li><strong>文件形式</strong> file.length( )</li>
+<li><strong>流的形式</strong> 将图片文件读到内存输入流中，看它的byte数</li>
+<li><strong>Bitmap</strong> bitmap.getByteCount( )</li>
+</ol>
+<h2 id="压缩方式"><a href="#压缩方式" class="headerlink" title="压缩方式"></a>压缩方式</h2><h3 id="质量压缩"><a href="#质量压缩" class="headerlink" title="质量压缩"></a>质量压缩</h3><p><code>bitmap.compress(CompressFormat,quality,outputstream)</code></p>
+<ol>
+<li>第一个参数是个枚举类CompressFormat，主要有JPEG，PNG，WEBP三种类型，一般使用JPEG；</li>
+<li>第二个参数是压缩质量，取值0-100之间，100代表质量最高，0代表最低；</li>
+<li>第三个参数是输出流，可把图片字节流保存成指定文件。<br>使用实例：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">compressBmpToFile</span><span class="params">(Bitmap bmp, File file)</span> </span>&#123;</span><br><span class="line">    ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">    <span class="keyword">int</span> options = <span class="number">80</span>;<span class="comment">// 压缩质量从80开始 </span></span><br><span class="line">    bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);</span><br><span class="line">    <span class="keyword">while</span> (baos.toByteArray().length / <span class="number">1024</span> &gt; <span class="number">100</span>) &#123; <span class="comment">// 如果大于100KB时，压缩质量-10；  </span></span><br><span class="line">        baos.reset();</span><br><span class="line">        options -= <span class="number">10</span>;</span><br><span class="line">        bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(file);</span><br><span class="line">        fos.write(baos.toByteArray());</span><br><span class="line">        fos.flush();</span><br><span class="line">        fos.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>方法说明：</strong>该方法是压缩图片的质量，<em>但并不会减少图片的像素</em>，比如，图片是800KB 1008x756像素的，经该方法压缩后，File形式的图片是在100KB左右，以方便上传服务器，但是BitmapFactory.decodeFile( )到内存中变成bitmap时，它的像素值仍然是1008x756，计算图片像素的方法是bitmap.getWidth( )和bitmap.getHeight( )，图片是由像素组成的，每个像素又包含什么呢？熟悉PS的人都知道，图片是有色相，明度和饱和度构成的。</p>
+<p>该方法也是Google官方文档解释说，它会让图片重新构造，但是有可能图片的位深（既色深）和每个像素的透明度会变化，JPEG only supports opaque(不透明)，也就是说jpeg格式压缩后，原来图片中透明的元素将会消失，所以这种格式很可能造成失真。 </p>
+<p>既然它是改变了图片的显示质量，达到了对File形式的图片进行压缩，图片的像素没有改变的话，重新读取经过压缩file为bitmap时，它占用的内存并不会减少。</p>
+<p>因为：bitmap.getByteCount( )是计算它的像素所占用的内存，请看官方解释：Returns the number of bytes used to store this bitmap’s pixels.</p>
+<h3 id="像素压缩"><a href="#像素压缩" class="headerlink" title="像素压缩"></a>像素压缩</h3><p><strong>特点：</strong>通过设置采样率，减少图片的像素，即图片从File形式变成Bitmap形式</p>
+<p>先看一个方法: 该方法是对内存中的Bitmap进行质量上的压缩, 由上面的理论可以得出该方法是无效的, 而且也是没有必要的,因为你已经将它读到内存中了,再压缩多此一举, 尽管在获取系统相册图片时,某些手机会直接返回一个Bitmap,但是这种情况下, 返回的Bitmap都是经过压缩的, 它不可能直接返回一个原声的Bitmap形式的图片, 后果可想而知。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Bitmap <span class="title">compressBmpFromBmp</span><span class="params">(Bitmap image)</span> </span>&#123;</span><br><span class="line">    ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">    <span class="keyword">int</span> options = <span class="number">100</span>;</span><br><span class="line">    image.compress(Bitmap.CompressFormat.JPEG, <span class="number">100</span>, baos);</span><br><span class="line">    <span class="keyword">while</span> (baos.toByteArray().length / <span class="number">1024</span> &gt; <span class="number">100</span>) &#123;</span><br><span class="line">        baos.reset();</span><br><span class="line">        options -= <span class="number">10</span>;</span><br><span class="line">        image.compress(Bitmap.CompressFormat.JPEG, options, baos);</span><br><span class="line">    &#125;</span><br><span class="line">    ByteArrayInputStream isBm = <span class="keyword">new</span> ByteArrayInputStream(baos.toByteArray());</span><br><span class="line">    Bitmap bitmap = BitmapFactory.decodeStream(isBm, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">return</span> bitmap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再看一个方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Bitmap <span class="title">compressImageFromFile</span><span class="params">(String srcPath)</span> </span>&#123;</span><br><span class="line">    BitmapFactory.Options newOpts = <span class="keyword">new</span> BitmapFactory.Options();</span><br><span class="line">    newOpts.inJustDecodeBounds = <span class="keyword">true</span>;<span class="comment">//只读边,不读内容  </span></span><br><span class="line">    Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);</span><br><span class="line"></span><br><span class="line">    newOpts.inJustDecodeBounds = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">int</span> w = newOpts.outWidth;</span><br><span class="line">    <span class="keyword">int</span> h = newOpts.outHeight;</span><br><span class="line">    <span class="keyword">float</span> hh = <span class="number">800f</span>;<span class="comment">//  </span></span><br><span class="line">    <span class="keyword">float</span> ww = <span class="number">480f</span>;<span class="comment">//  </span></span><br><span class="line">    <span class="keyword">int</span> be = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (w &gt; h &amp;&amp; w &gt; ww) &#123;</span><br><span class="line">        be = (<span class="keyword">int</span>) (newOpts.outWidth / ww);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (w &lt; h &amp;&amp; h &gt; hh) &#123;</span><br><span class="line">        be = (<span class="keyword">int</span>) (newOpts.outHeight / hh);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (be &lt;= <span class="number">0</span>)</span><br><span class="line">        be = <span class="number">1</span>;</span><br><span class="line">    newOpts.inSampleSize = be;<span class="comment">//设置采样率  </span></span><br><span class="line"></span><br><span class="line">    newOpts.inPreferredConfig = Config.ARGB_8888;<span class="comment">//该模式是默认的,可不设  </span></span><br><span class="line">    newOpts.inPurgeable = <span class="keyword">true</span>;<span class="comment">// 同时设置才会有效  </span></span><br><span class="line">    newOpts.inInputShareable = <span class="keyword">true</span>;<span class="comment">//。当系统内存不够时候图片自动被回收  </span></span><br><span class="line"></span><br><span class="line">    bitmap = BitmapFactory.decodeFile(srcPath, newOpts);</span><br><span class="line">    <span class="comment">// return compressBmpFromBmp(bitmap);//原来的方法调用了这个方法企图进行二次压缩  </span></span><br><span class="line">    <span class="comment">// 其实是无效的,大家尽管尝试  </span></span><br><span class="line">    <span class="keyword">return</span> bitmap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="压缩终极方案，修改libjpeg图像库，使用c库来保存bitmap到file"><a href="#压缩终极方案，修改libjpeg图像库，使用c库来保存bitmap到file" class="headerlink" title="压缩终极方案，修改libjpeg图像库，使用c库来保存bitmap到file"></a>压缩终极方案，修改libjpeg图像库，使用c库来保存bitmap到file</h3><ul>
+<li><a href="http://www.see-source.com/blog/300000022/684.html" target="_blank" rel="noopener">[Android算法] android图片压缩终极解决方案</a></li>
+<li><a href="http://www.cnblogs.com/MaxIE/p/3951294.html" target="_blank" rel="noopener">为什么Android的图片质量会比iPhone的差？</a></li>
+<li><a href="https://github.com/bither/bither-android-lib" target="_blank" rel="noopener">github demo</a></li>
+</ul>
+<blockquote>
+<p>以上是参考文章和修改libjpeg图像库的demo，本人亲自试了下，没有像介绍的那样可靠，也有可能不同ROM是否已经修复了此bug？暂时还不得而知，需要在此验证。</p>
+</blockquote>
+<h3 id="数据对比"><a href="#数据对比" class="headerlink" title="数据对比"></a>数据对比</h3><p><strong>默认使用的位图配置是ARGB_8888</strong>，图片加载到内存大小3456x4608x4字节约等于60.75MB，直接加载会OOM，需要进行长宽压缩 + 像素质量压缩。</p>
+<blockquote>
+<p>原图大小 5.21MB 3456x4608px，缩小4时，quality = 80，864x1152px</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">origin</th>
+<th style="text-align:center">jpegTrue</th>
+<th style="text-align:center">jpegFalse</th>
+<th style="text-align:center">sampleSize</th>
+<th style="text-align:center">quality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">145.75KB</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">80</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">141.63KB</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">80</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">144.79KB</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">80</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">origin</th>
+<th style="text-align:center">jpegTrue</th>
+<th style="text-align:center">jpegFalse</th>
+<th style="text-align:center">sampleSize</th>
+<th style="text-align:center">quality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">706.34KB</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">100</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">629.34KB</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">100</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">661.51KB</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">100</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">origin</th>
+<th style="text-align:center">jpegTrue</th>
+<th style="text-align:center">jpegFalse</th>
+<th style="text-align:center">sampleSize</th>
+<th style="text-align:center">quality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">8.71MB</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">100</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">7.13MB</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">100</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">7.62MB</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">100</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">origin</th>
+<th style="text-align:center">jpegTrue</th>
+<th style="text-align:center">jpegFalse</th>
+<th style="text-align:center">sampleSize</th>
+<th style="text-align:center">quality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1.43MB</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">80</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">1.34MB</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">80</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">1.41MB</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">80</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<blockquote>
+<p>Transform a bitmap into an input stream </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Your Bitmap.</span></span><br><span class="line">Bitmap bitmap = XXX;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> byteSize = bitmap.getRowBytes() * bitmap.getHeight();</span><br><span class="line"><span class="comment">//int byteSize = bitmap.getByteCount();</span></span><br><span class="line">ByteBuffer byteBuffer = ByteBuffer.allocate(byteSize);</span><br><span class="line">bitmap.copyPixelsToBuffer(byteBuffer);  </span><br><span class="line"></span><br><span class="line"><span class="comment">// Get the byteArray.</span></span><br><span class="line"><span class="keyword">byte</span>[] byteArray = byteBuffer.array();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get the ByteArrayInputStream.</span></span><br><span class="line">ByteArrayInputStream bs = <span class="keyword">new</span> ByteArrayInputStream(byteArray);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/28/Android-native和js简单交互/" rel="prev" title="Android native和js简单交互">
+                Android native和js简单交互 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="Nelson">
+            
+              <p class="site-author-name" itemprop="name">Nelson</p>
+              <p class="site-description motion-element" itemprop="description">热爱技术，热爱生活。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图片的存在形式"><span class="nav-number">1.</span> <span class="nav-text">图片的存在形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检测图片大小的方法"><span class="nav-number">2.</span> <span class="nav-text">检测图片大小的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩方式"><span class="nav-number">3.</span> <span class="nav-text">压缩方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#质量压缩"><span class="nav-number">3.1.</span> <span class="nav-text">质量压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#像素压缩"><span class="nav-number">3.2.</span> <span class="nav-text">像素压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩终极方案，修改libjpeg图像库，使用c库来保存bitmap到file"><span class="nav-number">3.3.</span> <span class="nav-text">压缩终极方案，修改libjpeg图像库，使用c库来保存bitmap到file</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据对比"><span class="nav-number">3.4.</span> <span class="nav-text">数据对比</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nelson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

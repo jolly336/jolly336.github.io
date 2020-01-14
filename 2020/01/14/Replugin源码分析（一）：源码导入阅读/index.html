@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,插件化,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言本文会讲解如何导入阅读 Android 热门插件化项目 RePlugin，这个项目由 360 手机卫士客户端团队开发。号称只用一处 Hook 点（ClassLoader）来完成，详细信息请移步 Replugin wiki 查看。">
+<meta name="keywords" content="Android,插件化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Replugin源码分析（一）：源码导入阅读">
+<meta property="og:url" content="http://nelson.duoshuo.com/2020/01/14/Replugin源码分析（一）：源码导入阅读/index.html">
+<meta property="og:site_name" content="Nelson&#39;s page">
+<meta property="og:description" content="前言本文会讲解如何导入阅读 Android 热门插件化项目 RePlugin，这个项目由 360 手机卫士客户端团队开发。号称只用一处 Hook 点（ClassLoader）来完成，详细信息请移步 Replugin wiki 查看。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://nelson.duoshuo.com/2020/01/14/Replugin源码分析（一）：源码导入阅读/replugin_source_dir.jpg">
+<meta property="og:image" content="http://nelson.duoshuo.com/2020/01/14/Replugin源码分析（一）：源码导入阅读/replugin_source_reading.jpg">
+<meta property="og:image" content="http://nelson.duoshuo.com/2020/01/14/Replugin源码分析（一）：源码导入阅读/replugin_host_demo.jpg">
+<meta property="og:image" content="http://nelson.duoshuo.com/2020/01/14/Replugin源码分析（一）：源码导入阅读/replugin_plugin_demo.jpg">
+<meta property="og:updated_time" content="2020-01-14T14:29:07.871Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Replugin源码分析（一）：源码导入阅读">
+<meta name="twitter:description" content="前言本文会讲解如何导入阅读 Android 热门插件化项目 RePlugin，这个项目由 360 手机卫士客户端团队开发。号称只用一处 Hook 点（ClassLoader）来完成，详细信息请移步 Replugin wiki 查看。">
+<meta name="twitter:image" content="http://nelson.duoshuo.com/2020/01/14/Replugin源码分析（一）：源码导入阅读/replugin_source_dir.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nelson.duoshuo.com/2020/01/14/Replugin源码分析（一）：源码导入阅读/">
+
+
+
+
+
+  <title>Replugin源码分析（一）：源码导入阅读 | Nelson's page</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Nelson's page</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nelson.duoshuo.com/2020/01/14/Replugin源码分析（一）：源码导入阅读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nelson">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nelson's page">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Replugin源码分析（一）：源码导入阅读</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-14T11:45:40+08:00">
+                2020-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文会讲解如何导入阅读 Android 热门插件化项目 <a href="https://github.com/Qihoo360/RePlugin" target="_blank" rel="noopener">RePlugin</a>，这个项目由 360 手机卫士客户端团队开发。号称只用一处 Hook 点（ClassLoader）来完成，详细信息请移步 <a href="https://github.com/Qihoo360/RePlugin/wiki" target="_blank" rel="noopener">Replugin wiki</a> 查看。</p>
+<a id="more"></a>
+<h2 id="RePlugin-工程"><a href="#RePlugin-工程" class="headerlink" title="RePlugin 工程"></a>RePlugin 工程</h2><p><a href="https://github.com/Qihoo360/RePlugin" target="_blank" rel="noopener">Replugin</a> 源码 clone 下来，目录结构如下：</p>
+<p><img desc="Replugin 源码目录结构" src="replugin_source_dir.jpg" width="30%"></p>
+<p>RePlugin 框架本身是基于 Android Studio 开发的，主要包括两种类型的库：</p>
+<ul>
+<li>Android Library</li>
+<li>Gradle 插件</li>
+</ul>
+<p>每种库又分为宿主和插件，最后 RePlugin 包括五部分：</p>
+<ul>
+<li>replugin-host-gradle （宿主 gradle 插件，生成清单占坑文件、自定义属性文件等）</li>
+<li>replugin-host-lib （Replugin 核心 Java 工程）</li>
+<li>rplugin-plugin-gradle（插件 Gradle 插件，动态生修改 activity 继承、provider 重定向等）</li>
+<li>replugin-plugin-lib（通过 Java 反射调用主程序中 replugin-host-gradle 相关接口，并提供「双向通信」的能力）</li>
+<li>replugin-sample、replugin-sample-extra （Replugin 使用演示工程，包含宿主和插件的演示）</li>
+</ul>
+<h2 id="导入-Android-Studio"><a href="#导入-Android-Studio" class="headerlink" title="导入 Android Studio"></a>导入 Android Studio</h2><ul>
+<li>源码导入</li>
+</ul>
+<p>Replugin 源码工程中 host &amp; plugin 的 gradle 插件是个 Android library，library 项目是个 Android Application，不能一次性导入到一个工程看查看源码，所以我们需要新建个 AS 空项目，把上面介绍的工程通过 <code>import module</code>的方式导入进来，导入进来就可以方便插件它的源码了。</p>
+<p>如图，replugin_source_reading 是我创建的一个空项目，依次点击 toolbar  -&gt; File -&gt; New -&gt; Import Module 把 replugin-host-gradle、replugin-host-library、replugin-plugin-gradle、replugin-plugin-library 四个 module 导入进来，到这里就把 Replugin 源码环境搭建起来了。</p>
+<p><img desc="源码库导入 AS" src="replugin_source_reading.jpg" width="60%"></p>
+<ul>
+<li><p>sample demo 导入</p>
+<ol>
+<li>replugin-sample：包括 host、plugin 演示工程，都是 Android Application 的，所以只能分别导入成一个个 Android 工程来运行</li>
+<li>replugin-sample-extra：包括 fresco host &amp; plugin 演示工程，展示宿主和插件公共一份代码的能力，和 replugin-sample 一样导入就行</li>
+</ol>
+</li>
+</ul>
+<p>如图，导入实例工程和其它 Android App 一样，选择你要导入的 demo 工程导入即可。</p>
+<p><img desc="Replugin host demo" src="replugin_host_demo.jpg" width="50%" height="50%"><br><img desc="Replugin plugin demo" src="replugin_plugin_demo.jpg" width="50%" height="50%"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://github.com/Qihoo360/RePlugin" target="_blank" rel="noopener">Github/Replugin</a></li>
+<li><a href="https://www.jianshu.com/p/2244bab4b2d5" target="_blank" rel="noopener">RePlugin阅读源码环境搭建</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/插件化/" rel="tag"># 插件化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/30/Tmux-使用教程/" rel="next" title="Tmux 使用教程">
+                <i class="fa fa-chevron-left"></i> Tmux 使用教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="Nelson">
+            
+              <p class="site-author-name" itemprop="name">Nelson</p>
+              <p class="site-description motion-element" itemprop="description">热爱技术，热爱生活。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RePlugin-工程"><span class="nav-number">2.</span> <span class="nav-text">RePlugin 工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入-Android-Studio"><span class="nav-number">3.</span> <span class="nav-text">导入 Android Studio</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nelson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
