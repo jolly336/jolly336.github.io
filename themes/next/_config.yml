@@ -408,7 +408,7 @@ valine:
 # Introduction: https://imsun.net/posts/gitment-introduction/
 # You can get your Github ID from https://api.github.com/users/<Github username>
 gitment:
-  enable: true
+  enable: false
   mint: false # RECOMMEND, A mint on Gitment, to support count, language and proxy_gateway
   count: true # Show comments count in post meta area
   lazy: false # Comments lazy loading with a button
@@ -421,6 +421,21 @@ gitment:
   proxy_gateway: # Address of api proxy, See: https://github.com/aimingoo/intersect
   redirect_protocol: # Protocol of redirect_uri with force_redirect_protocol when mint enabled
 
+
+gitalk:
+  enable: true  #指的是是否开启Gitalk
+  githubID: jolly336
+  ClientID: 30b4a5db3a17c04cb39d #之前的Client ID
+  ClientSecret: 88e3b0d57f6fe55f9bdb09513bad26b7ae314081 #之前的Client Secret
+  repo: blog-comments #你要存放的项目名，下文会详细再说
+  owner: jolly336 #这个项目名的拥有者（GitHub账号或组织）
+  adminUser: "['jolly336']" #管理员用户，下文也会详细讲
+  ID: location.pathname  #页面ID，不知道就默认的就好了
+  labels: "['Gitalk']" #GitHub issues的标签，下面会详细说
+  perPage: 15 #每页多少个评论
+  pagerDirection: last #排序方式是从旧到新（first）还是从新到旧（last）
+  createIssueManually: true #如果当前页面没有相应的 isssue ，且登录的用户属于 admin，则会自动创建 issue。如果设置为 true，则显示一个初始化页面，创建 issue 需要点击 init 按钮。
+  distractionFreeMode: false #是否启用快捷键(cmd|ctrl + enter) 提交评论.
 
 # Baidu Share
 # Available value:
