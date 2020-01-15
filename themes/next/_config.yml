@@ -415,27 +415,20 @@ gitment:
   cleanly: false # Hide 'Powered by ...' on footer, and more
   language: # Force language, or auto switch by theme
   github_user: jolly336 # MUST HAVE, Your Github ID
-  github_repo: gitment-comments # MUST HAVE, The repo you use to store Gitment comments
+  github_repo: blog-comments # MUST HAVE, The repo you use to store Gitment comments
   client_id: 30b4a5db3a17c04cb39d # MUST HAVE, Github client id for the Gitment
   client_secret: 88e3b0d57f6fe55f9bdb09513bad26b7ae314081 # EITHER this or proxy_gateway, Github access secret token for the Gitment
   proxy_gateway: # Address of api proxy, See: https://github.com/aimingoo/intersect
   redirect_protocol: # Protocol of redirect_uri with force_redirect_protocol when mint enabled
 
-
 gitalk:
-  enable: true  #指的是是否开启Gitalk
-  githubID: jolly336
-  ClientID: 30b4a5db3a17c04cb39d #之前的Client ID
-  ClientSecret: 88e3b0d57f6fe55f9bdb09513bad26b7ae314081 #之前的Client Secret
-  repo: blog-comments #你要存放的项目名，下文会详细再说
-  owner: jolly336 #这个项目名的拥有者（GitHub账号或组织）
-  adminUser: "['jolly336']" #管理员用户，下文也会详细讲
-  ID: location.pathname  #页面ID，不知道就默认的就好了
-  labels: "['Gitalk']" #GitHub issues的标签，下面会详细说
-  perPage: 15 #每页多少个评论
-  pagerDirection: last #排序方式是从旧到新（first）还是从新到旧（last）
-  createIssueManually: true #如果当前页面没有相应的 isssue ，且登录的用户属于 admin，则会自动创建 issue。如果设置为 true，则显示一个初始化页面，创建 issue 需要点击 init 按钮。
-  distractionFreeMode: false #是否启用快捷键(cmd|ctrl + enter) 提交评论.
+  enable: true
+  githubID: jolly336  # 你的github ID，用来说明你是个人还是某个组织的，一定需要；
+  repo: blog-comments # 你要新建一个repo来保存这些comments，这里repo就随便新建一个就行；
+  ClientID: 30b4a5db3a17c04cb39d # 就是新建APP的玩意，请注意，这个一定要和你部署的网站的对应起来，一个网站对应一个这个client；
+  ClientSecret: 88e3b0d57f6fe55f9bdb09513bad26b7ae314081
+  adminUser: jolly336 # 你的admin 用户名，通常就是你自己
+  distractionFreeMode: true
 
 # Baidu Share
 # Available value:
