@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://nelson.duoshuo.com/2020/01/15/给博客添加-gitalk-comment-评论系统/github_register_app.jpg">
 <meta property="og:image" content="http://nelson.duoshuo.com/2020/01/15/给博客添加-gitalk-comment-评论系统/github_app_gitalk_keys.jpg">
 <meta property="og:image" content="http://nelson.duoshuo.com/2020/01/15/给博客添加-gitalk-comment-评论系统/gitalk_comment.jpg">
-<meta property="og:updated_time" content="2020-01-20T08:26:17.287Z">
+<meta property="og:updated_time" content="2020-01-20T08:38:30.421Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="给博客添加 gitalk comment 评论系统">
 <meta name="twitter:description" content="本文记录如何在基于 Hexo 的博客里添加 gitalk comment 评论系统。">
@@ -363,7 +363,7 @@
 <p>gitalk 是基于 GitHub Issue 来操作评论的，那就需要我们在 GitHub 上注册指定的 Application 来申请操作权限！</p>
 </blockquote>
 <h3 id="1-Register-Application"><a href="#1-Register-Application" class="headerlink" title="1. Register Application"></a>1. Register Application</h3><p>点击 <a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">https://github.com/settings/applications/new</a> 注册链接去自己 GitHub 上注册新应用。</p>
-<p><img src="github_register_app.jpg" alt="Github 注册 App"></p>
+<p><img desc="Github 注册 App" src="github_register_app.jpg" width="60%"></p>
 <p>说明：</p>
 <ul>
 <li>Application name # 随便写，这里就起个 Gitalk 吧</li>
@@ -371,7 +371,7 @@
 <li>Authorization callback URL # 当评论系统出错时，跳转地址，这里和 homepage URL 保持一致就行</li>
 <li>Application description，可选，随便写点啥</li>
 </ul>
-<p>填写完成后点击注册，会生成一个 GitHub Application，在 <a href="https://github.com/settings/developers" target="_blank" rel="noopener">https://github.com/settings/developers</a> 地址的 OAuth Apps 列表下可以看到，如果后面评论调试出错了，还需要回这里修改的。</p>
+<p>填写完成后点击注册，会生成一个 GitHub Application，<a href="https://github.com/settings/developers" target="_blank" rel="noopener">点击这里</a> 的 OAuth Apps 列表会看到创建好的 App，如果后面评论调试出错了，还需要回这里修改的。</p>
 <p>注册完记录下生成的 Client ID 和 Client Secret 两个 key，待会修改主题配置需要用到。</p>
 <p><img src="github_app_gitalk_keys.jpg" alt="Gitalk App"></p>
 <h3 id="2-修改-next-主题"><a href="#2-修改-next-主题" class="headerlink" title="2. 修改 next 主题"></a>2. 修改 next 主题</h3><blockquote>
@@ -388,11 +388,11 @@
 <p>修改 /layout/_partials/comments.swig，添加内容如下：</p>
 <p><strong>打开文件找到这个代码块，在里面添加 gitalk 元素，注意别写错位置了！</strong>，博主就是一开始写错位置，导致 gitalk 评论死活不显示，最后通过 console 才定位到是这的问题！</p>
 <ul>
-<li><p>添加之前：</p>
+<li>添加之前：</li>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% elseif theme.valine.appid and theme.valine.appkey %&#125;</span><br><span class="line">    &lt;div class=&quot;comments&quot; id=&quot;comments&quot;&gt;&lt;/div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>gitalk 元素代码块：</p>
-</li>
+<ul>
+<li>要添加的 gitalk 元素代码块：</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;% elseif theme.gitalk.enable %&#125;</span><br><span class="line">&lt;div id=&quot;gitalk-container&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 <ul>
