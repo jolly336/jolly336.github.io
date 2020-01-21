@@ -1,8 +1,8 @@
 ---
 title: 博客集成 gitalk comment 评论系统
 date: 2020-01-15 23:36:10
-categories: [博客]
-tags: [博客, gitalk]
+tags: [博客]
+categories: [博客, gitalk]
 ---
 
 本文记录如何在基于 Hexo 的博客里添加 gitalk comment 评论系统。
