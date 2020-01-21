@@ -1,5 +1,5 @@
 ---
-title: 给博客添加 gitalk comment 评论系统
+title: 博客集成 gitalk comment 评论系统
 date: 2020-01-15 23:36:10
 categories: [博客]
 tags: [博客, gitalk]
@@ -148,10 +148,4 @@ gitalk:
 * [终于！！！记录如何在hexo next主题下配置gitalk评论系统](https://jinfagang.github.io/2018/10/07/%E7%BB%88%E4%BA%8E%EF%BC%81%EF%BC%81%EF%BC%81%E8%AE%B0%E5%BD%95%E5%A6%82%E4%BD%95%E5%9C%A8hexo-next%E4%B8%BB%E9%A2%98%E4%B8%8B%E9%85%8D%E7%BD%AEgitalk%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/)
 * [Hexo NexT主题中集成gitalk评论系统](https://asdfv1929.github.io/2018/01/20/gitalk/)
 * [hexo 使用 gitalk 评论组件的几个注意点！！！](https://www.jianshu.com/p/b4ca8e7c7980)
-
-
-
-
-
-
 
