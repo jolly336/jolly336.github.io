@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Android,">
+  <meta name="keywords" content="数据结构,">
 
 
 
@@ -79,31 +79,18 @@
 
 
 
-<meta name="description" content="本博客来自Android studio断点调试高级技巧总结一文。  本文将总结几种在开发中比较重要的断点调试方法：条件断点、异常断点、和日志断点。">
-<meta name="keywords" content="Android">
+<meta name="description" content="本文为「数据结构」系列第一篇，会说明为什么要学习数据结构；数据结构的用处；数据结构的分类；如何学习数据结构等问题，先对数据结构有个全面的认识，相信带着问题来学习它会达到事半功倍的效果。">
+<meta name="keywords" content="数据结构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android studio断点调试高级技巧总结">
-<meta property="og:url" content="http://nelson.duoshuo.com/2017/03/06/Android-studio断点调试高级技巧总结/index.html">
+<meta property="og:title" content="数据结构-为什么要学习数据结构？">
+<meta property="og:url" content="http://nelson.duoshuo.com/2019/01/01/数据结构-为什么要学习数据结构？/index.html">
 <meta property="og:site_name" content="Nelson&#39;s page">
-<meta property="og:description" content="本博客来自Android studio断点调试高级技巧总结一文。  本文将总结几种在开发中比较重要的断点调试方法：条件断点、异常断点、和日志断点。">
+<meta property="og:description" content="本文为「数据结构」系列第一篇，会说明为什么要学习数据结构；数据结构的用处；数据结构的分类；如何学习数据结构等问题，先对数据结构有个全面的认识，相信带着问题来学习它会达到事半功倍的效果。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_1.jpg">
-<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_2.jpg">
-<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_3.jpg">
-<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_4.jpg">
-<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_5.jpg">
-<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_6.jpg">
-<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_7.jpg">
-<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_8.jpg">
-<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_9.jpg">
-<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_9.jpg">
-<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_10.jpg">
-<meta property="og:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_11.jpg">
-<meta property="og:updated_time" content="2020-01-14T14:29:07.858Z">
+<meta property="og:updated_time" content="2020-01-31T07:04:50.703Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android studio断点调试高级技巧总结">
-<meta name="twitter:description" content="本博客来自Android studio断点调试高级技巧总结一文。  本文将总结几种在开发中比较重要的断点调试方法：条件断点、异常断点、和日志断点。">
-<meta name="twitter:image" content="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_1.jpg">
+<meta name="twitter:title" content="数据结构-为什么要学习数据结构？">
+<meta name="twitter:description" content="本文为「数据结构」系列第一篇，会说明为什么要学习数据结构；数据结构的用处；数据结构的分类；如何学习数据结构等问题，先对数据结构有个全面的认识，相信带着问题来学习它会达到事半功倍的效果。">
 
 
 
@@ -133,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://nelson.duoshuo.com/2017/03/06/Android-studio断点调试高级技巧总结/">
+  <link rel="canonical" href="http://nelson.duoshuo.com/2019/01/01/数据结构-为什么要学习数据结构？/">
 
 
 
 
 
-  <title>Android studio断点调试高级技巧总结 | Nelson's page</title>
+  <title>数据结构-为什么要学习数据结构？ | Nelson's page</title>
   
 
 
@@ -276,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://nelson.duoshuo.com/2017/03/06/Android-studio断点调试高级技巧总结/">
+    <link itemprop="mainEntityOfPage" href="http://nelson.duoshuo.com/2019/01/01/数据结构-为什么要学习数据结构？/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Nelson">
@@ -293,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Android studio断点调试高级技巧总结</h1>
+          <h1 class="post-title" itemprop="name headline">数据结构-为什么要学习数据结构？</h1>
         
 
         <div class="post-meta">
@@ -305,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-06T10:47:59+08:00">
-                2017-03-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-01T13:59:35+08:00">
+                2019-01-01
               </time>
             
 
@@ -328,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
                   </a>
                 </span>
 
@@ -345,7 +332,7 @@
 
           
           
-             <span id="/2017/03/06/Android-studio断点调试高级技巧总结/" class="leancloud_visitors" data-flag-title="Android studio断点调试高级技巧总结">
+             <span id="/2019/01/01/数据结构-为什么要学习数据结构？/" class="leancloud_visitors" data-flag-title="数据结构-为什么要学习数据结构？">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,35 +363,110 @@
       
 
       
-        <blockquote>
-<p>本博客来自<a href="http://www.jianshu.com/p/984e101fd73e" target="_blank" rel="noopener">Android studio断点调试高级技巧总结</a>一文。</p>
-</blockquote>
-<p>本文将总结几种在开发中比较重要的断点调试方法：<strong>条件断点</strong>、<strong>异常断点</strong>、<strong>和日志断点</strong>。</p>
+        <p>本文为「数据结构」系列第一篇，会说明为什么要学习数据结构；数据结构的用处；数据结构的分类；如何学习数据结构等问题，先对数据结构有个全面的认识，相信带着问题来学习它会达到事半功倍的效果。</p>
 <a id="more"></a>
-<h2 id="条件断点"><a href="#条件断点" class="headerlink" title="条件断点"></a>条件断点</h2><p>假设我们有一个循环体，但是我们只想调试i==10的情况，此时可以采用条件断点来完成。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">    j++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果我们想观察i==500时，程序的执行情况，可以这样操作。首先在j++所在行设置一个断点</p>
-<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_1.jpg" alt="条件断点_1"><br>此时 在断点上单击右键，输入i==500</p>
-<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_2.jpg" alt="条件断点_2"></p>
-<p>设置完毕啦，启动断点调试后，你就会发现，第一次进入端点时，i==500了。</p>
-<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_3.jpg" alt="条件断点_3"></p>
-<h2 id="异常断点"><a href="#异常断点" class="headerlink" title="异常断点"></a>异常断点</h2><p>这个功能个人感觉还是挺有用处的。先说适用场景，假设我们的App出现崩溃，但是因为一些原因log日志不好查看或者查看不到，我们知道可能是NullPointerException异常了，但是定位不到异常在哪里，此时我们可能会将自己怀疑可能出现空指针异常的地方都打上断点，这样做是非常低效的，有了异常断点功能，一步就可以搞定。<br>为了说明问题，我在37行人为的引入了空指针异常。</p>
-<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_4.jpg" alt="异常断点_1"></p>
-<p>打开Run-&gt;View BreakPoints或者直接ctrl+shift+F8,打开异常设置面板。</p>
-<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_5.jpg" alt="异常断点_2"></p>
-<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_6.jpg" alt="异常断点_3"></p>
-<p>按上图操作成功的加入了空指针异常断点监控，此时直接Debug模式调试。</p>
-<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_7.jpg" alt="异常断点_4"></p>
-<p>程序直接在37行停下了，而且会打印出空指针的日志。注意37行我们并没有提前设置断点。是不是很神奇，直接定位到了bug。</p>
-<h2 id="日志断点"><a href="#日志断点" class="headerlink" title="日志断点"></a>日志断点</h2><p>如果我们想要在断点调试的时候添加log日志，我们最常用的方式是直接加入一行log，重新编译，观察结果后，在去掉log，在重新编译，此时我们可以使用日志断点的功能。</p>
-<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_8.jpg" alt="日志断点_1"></p>
-<p>设置方法，首先设置普通断点，在断点上单击右键，将suspand属性设为false，在出现的对话框中勾选上Log evaluated expression，下面我们在第一个断点上想观察一下i的值，在第二个断点上打印下当前线程的名字。设置如下</p>
-<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_9.jpg" alt="日志断点_2"></p>
-<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_9.jpg" alt="日志断点_3"></p>
-<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_10.jpg" alt="日志断点_4"></p>
-<p>运行一把，看看效果：</p>
-<p><img src="http://omdtn071e.bkt.clouddn.com/2017-3-6_%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95_11.jpg" alt="日志断点_5"></p>
-<p>android的断点调试功能就介绍到这里。</p>
+<h2 id="1、为什么要学习数据结构？"><a href="#1、为什么要学习数据结构？" class="headerlink" title="1、为什么要学习数据结构？"></a>1、为什么要学习数据结构？</h2><p><strong>数据结构研究的是数据如何在计算机中进行组织和存储，使得我们可以高效的获取数据或者修改数据。</strong></p>
+<p>其中数据结构的分类主要包括如下：</p>
+<ol>
+<li>线性结构<ul>
+<li>数组；栈；</li>
+<li>队列；链表；</li>
+<li>哈希表…</li>
+</ul>
+</li>
+<li>树结构<ul>
+<li>二叉树，二分搜索树；</li>
+<li>AVL；红黑树；Treap；Splay；</li>
+<li>堆；Trie；线段树；K-D树；</li>
+<li>并查集；哈夫曼树；…</li>
+</ul>
+</li>
+<li>图结构<ul>
+<li>邻接矩阵；</li>
+<li>邻接表</li>
+</ul>
+</li>
+</ol>
+<p>我们在软件开发过程中，需要根据应用的不同，灵活选择最合适的数据结构，来解决现实问题。</p>
+<h2 id="2、在计算机的世界里，数据结构无处不在"><a href="#2、在计算机的世界里，数据结构无处不在" class="headerlink" title="2、在计算机的世界里，数据结构无处不在"></a>2、在计算机的世界里，数据结构无处不在</h2><p>数据结构在计算机的世界里，扮演着很重要的角色，应用在很多日常应用系统中，以下列举了一些数据结构应用的例子及其使用到的数据结构。</p>
+<h3 id="2-1-数据库"><a href="#2-1-数据库" class="headerlink" title="2.1 数据库"></a>2.1 数据库</h3><p>树结构：</p>
+<p>AVL；红黑树；Treap；<br>伸展树；B树；</p>
+<p>哈希表</p>
+<h3 id="2-2-操作系统"><a href="#2-2-操作系统" class="headerlink" title="2.2 操作系统"></a>2.2 操作系统</h3><p>快速在多任务间切换</p>
+<p>系统栈</p>
+<p>优先队列：堆</p>
+<h3 id="2-3-文件压缩"><a href="#2-3-文件压缩" class="headerlink" title="2.3 文件压缩"></a>2.3 文件压缩</h3><p>文件 RAR、MP3、PDF、PNG、MP4 等对不同文件进行压缩，形成了这种专门文件格式。</p>
+<p>在进行压缩时，也需要借助数据结构：</p>
+<p>哈夫曼树（比较简单文件压缩）</p>
+<h3 id="2-4-通讯录-CONTACTS"><a href="#2-4-通讯录-CONTACTS" class="headerlink" title="2.4 通讯录 CONTACTS"></a>2.4 通讯录 CONTACTS</h3><p>很早以前，智能手机还没有普及，微软有一款产品，是给 pda（personal digital assistant） 个人数字助理系统，有个通讯录的概念，</p>
+<p>方案一：链表，查找一个人很慢，计算性能很慢</p>
+<p>方案二：Trie-前缀树，查找联系人在毫秒级别，很快！</p>
+<h3 id="2-5-大量的算法，以数据结构为基石"><a href="#2-5-大量的算法，以数据结构为基石" class="headerlink" title="2.5 大量的算法，以数据结构为基石"></a>2.5 大量的算法，以数据结构为基石</h3><p>寻路算法</p>
+<p>A -&gt; B 点路径</p>
+<p>图论算法：</p>
+<p>深度优先算法 DFS：使用栈</p>
+<p>广度优先算法 BFS：使用队列</p>
+<h3 id="2-6-数据结构-算法-程序"><a href="#2-6-数据结构-算法-程序" class="headerlink" title="2.6 数据结构 + 算法 = 程序"></a>2.6 数据结构 + 算法 = 程序</h3><p>程序的具体实现完全靠<strong>数据结构</strong>和<strong>算法</strong>，日常生活中的，一个个问题都需要<strong>建模</strong>，建立数据结构，具体执行的策略，那就要靠算法了。如果再加上<strong>设计模式</strong>，就为了让代码实现起来更优雅。</p>
+<p>问题 —&gt; 数据结构+算法 == 程序 —&gt; 解决问题可以说，只要你用程序来解决现实中的问题，数据结构算法一天都不会过时。</p>
+<h2 id="3、学习内容"><a href="#3、学习内容" class="headerlink" title="3、学习内容"></a>3、学习内容</h2><p>数据结构不应该局限于某门语言，除了使用 Java 语言完成，也可以使用其他语言来实现数据结构代码。当然支持<strong>面向对象</strong>的语言最好。</p>
+<h3 id="3-1-12-种数据结构"><a href="#3-1-12-种数据结构" class="headerlink" title="3.1 12 种数据结构"></a>3.1 12 种数据结构</h3><p>主要包括如下 12种数据结构：</p>
+<ol>
+<li>数组</li>
+<li>栈</li>
+<li>队列</li>
+<li>链表-单链表 &amp; 双链表</li>
+<li>二分搜索树</li>
+<li>堆</li>
+<li>线段树</li>
+<li>Trie</li>
+<li>并查集</li>
+<li>AVL</li>
+<li>红黑树</li>
+<li>哈希表</li>
+</ol>
+<p>本次学习不包含图结构，因为图论领域以算法为主。</p>
+<h3 id="3-2-学习思路"><a href="#3-2-学习思路" class="headerlink" title="3.2 学习思路"></a>3.2 学习思路</h3><ul>
+<li><p><strong>面向基础：递归；调试；简单的复杂度分析；</strong></p>
+</li>
+<li><p><strong>手把手的底层实现，创建属于自己的小型数据结构库</strong></p>
+</li>
+<li><p><strong>强调比较和优化</strong></p>
+</li>
+</ul>
+<h3 id="3-3-内容分类"><a href="#3-3-内容分类" class="headerlink" title="3.3 内容分类"></a>3.3 内容分类</h3><p>学习的代码都是基于 <strong><a href="http://leetcode.com/" target="_blank" rel="noopener">LeetCode</a></strong>和<strong><a href="https://leetcode-cn.com/" target="_blank" rel="noopener">LeetCode 中文</a></strong>。</p>
+<blockquote>
+<p>ps: 关于 LeetCode 的使用，后面会单独拿一篇文章来讲解怎样高效使用 LeetCode，敬请关注~</p>
+</blockquote>
+<ol>
+<li>面向面试</li>
+</ol>
+<p>数组、栈、队列、链表、二分搜索树、堆</p>
+<ol start="2">
+<li>面向竞赛</li>
+</ol>
+<p>线段树、Trie、并查集</p>
+<ol start="3">
+<li>其他</li>
+</ol>
+<ul>
+<li>平衡二叉树：</li>
+</ul>
+<p>AVL、红黑树</p>
+<ul>
+<li>常用数据存储结构：</li>
+</ul>
+<p>哈希表-冲突检测，就会产生很多和性能有关的问题</p>
+<p>这三种数据结构在面试中更多的是<strong>概念</strong>和<strong>性能分析</strong>问题，不会要求底层实现。</p>
+<h2 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h2><p>学习数据结构时，不要钻牛角尖，更不要死记硬背，请谨记以下几点建议。</p>
+<ul>
+<li>不要完美主义，掌握好「度」</li>
+<li>学习本着自己的目标去</li>
+<li>了解各个数据结构的底层实现原理</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="leetcode.com">LeetCode</a></li>
+<li><a href="leetcode-cn.com">LeetCode-cn</a></li>
+</ul>
 
       
     </div>
@@ -451,7 +513,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Android/" rel="tag"># Android</a>
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
           
         </div>
       
@@ -464,8 +526,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/28/Android-native和js简单交互/" rel="next" title="Android native和js简单交互">
-                <i class="fa fa-chevron-left"></i> Android native和js简单交互
+              <a href="/2018/12/08/一些常见专业词汇的正确写法/" rel="next" title="一些常见专业词汇的正确写法">
+                <i class="fa fa-chevron-left"></i> 一些常见专业词汇的正确写法
               </a>
             
           </div>
@@ -474,8 +536,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/02/如何打败拖延症/" rel="prev" title="如何打败拖延症">
-                如何打败拖延症 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/07/06/Android-在线源码阅读/" rel="prev" title="Android 在线源码阅读">
+                Android 在线源码阅读 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -640,7 +702,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#条件断点"><span class="nav-number">1.</span> <span class="nav-text">条件断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常断点"><span class="nav-number">2.</span> <span class="nav-text">异常断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志断点"><span class="nav-number">3.</span> <span class="nav-text">日志断点</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、为什么要学习数据结构？"><span class="nav-number">1.</span> <span class="nav-text">1、为什么要学习数据结构？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、在计算机的世界里，数据结构无处不在"><span class="nav-number">2.</span> <span class="nav-text">2、在计算机的世界里，数据结构无处不在</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-数据库"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-操作系统"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 操作系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-文件压缩"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 文件压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-通讯录-CONTACTS"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 通讯录 CONTACTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-大量的算法，以数据结构为基石"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 大量的算法，以数据结构为基石</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-数据结构-算法-程序"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 数据结构 + 算法 = 程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、学习内容"><span class="nav-number">3.</span> <span class="nav-text">3、学习内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-12-种数据结构"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 12 种数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-学习思路"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 学习思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-内容分类"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 内容分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建议"><span class="nav-number">4.</span> <span class="nav-text">建议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
